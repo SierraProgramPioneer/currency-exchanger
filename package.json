@@ -7,7 +7,9 @@
     "test": "jest --coverage",
     "build": "webpack --mode=development",
     "start": "webpack-dev-server --open --mode=development",
-    "lint": "eslint src --ext .js"
+    "lint": "eslint src --ext .js",
+    "deploy": "gh-pages -d dist",
+    "predeplay": "npm run build"
   },
   "keywords": [],
   "author": "",
