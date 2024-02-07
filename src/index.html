@@ -19,14 +19,15 @@
             <form id="currencyExchange">
 
 
-                <div class="input-group mb-3" id="usdAmount">
+                <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
-                    <input type="number" class="form-control" aria-label="usdAmount)">
+                    <input id="usdAmount" type="number" class="form-control" aria-label="usdAmount)">
                     <span class="input-group-text">USD</span>
                 </div>
 
-                <select class="form-select" aria-label="currencyOptions">
-                    <option selected>Choose a Currency from the dropdown to Find the Conversion Amount</option>
+                <select class="form-select" aria-label="currencyOptions" id="currencyOptions">
+                    <option value="choice1">Choice 1</option>
+                    <option value="choice2">Choice 2</option>
                 </select>
 
                 <button type="submit" class="btn btn-success">Get Exchange Data</button>

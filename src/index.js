@@ -4,10 +4,26 @@ import "./css/styles.css";
 
 
 
-function handleSubmission(event) {
-    event.preventDefault();
-    console.log("submission");
+
+// UI Logic
+
+
+function printResult(dollarAmount, selectedCurrency) {
+    console.log(dollarAmount);
+    console.log(selectedCurrency);
 }
 
-const submitButton = document.querySelector("form");
-submitButton.addEventListener("submit", handleSubmission);
+
+function handleFormSubmission(event) {
+    event.preventDefault();
+    const dollarAmount = document.getElementById("usdAmount").value;
+    const currencyOptions = document.getElementById("currencyOptions");
+    const selectedCurrency = currencyOptions.value;
+    printResult(dollarAmount, selectedCurrency);
+}
+
+
+window.addEventListener("load", function () {
+    document.querySelector("form").addEventListener("submit", handleFormSubmission);
+});
+
