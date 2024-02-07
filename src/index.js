@@ -10,7 +10,7 @@ function calculateExchange(dollarAmount, selectedCurrency) {
     let exchangePromise = ExchangeService.exchangeDollars(dollarAmount, selectedCurrency);
     exchangePromise.then(function (exchangeDataArray) {
         printResult(exchangeDataArray);
-    }, function (errorArray) {
+    }).catch(function (errorArray) {
         printError(errorArray);
     });
 }
@@ -18,11 +18,27 @@ function calculateExchange(dollarAmount, selectedCurrency) {
 
 // UI Logic
 
+// Logic to Populate currency options with current codes
+function populateCurrencyOptions() {
+    const codes = ["USD", "AED", "CAN"];
+    let currencyOptionsDisplay = document.getElementById("currencyOptions");
+    codes.forEach(function (currency) {
+        const option = document.createElement("option");
+        option.innerText = currency;
+        option.value = currency;
+        currencyOptionsDisplay.append(option);
+    });
+}
+
+
+
 function printResult(exchangeDataArray) {
+    console.log(exchangeDataArray);
     document.getElementById("results").innerText = "result";
 }
 
 function printError(errorArray) {
+    console.log(errorArray);
     document.getElementById("results").innerText = "error";
 }
 
@@ -47,5 +63,6 @@ window.addEventListener("load", function () {
     document.querySelector("form").addEventListener("submit", handleFormSubmission);
     document.getElementById("usdAmount").addEventListener("input", clearPastResults);
     document.getElementById("currencyOptions").addEventListener("click", clearPastResults);
+    populateCurrencyOptions();
 });
 
