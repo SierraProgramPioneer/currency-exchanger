@@ -9,8 +9,8 @@ import "./css/styles.css";
 
 
 function printResult(dollarAmount, selectedCurrency) {
-    console.log(dollarAmount);
-    console.log(selectedCurrency);
+
+    document.getElementById("results").innerText = `Amount in selected currency is ${dollarAmount} ${selectedCurrency}`;
 }
 
 
