@@ -20,6 +20,8 @@ function handleFormSubmission(event) {
     const currencyOptions = document.getElementById("currencyOptions");
     const selectedCurrency = currencyOptions.value;
     printResult(dollarAmount, selectedCurrency);
+    document.getElementById("usdAmount").value = null;
+    currencyOptions.selectedIndex = 0;
 }
 
 
