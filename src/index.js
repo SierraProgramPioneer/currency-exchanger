@@ -38,12 +38,15 @@ function calculateExchange(dollarAmount, selectedCurrency) {
 
 // Logic to Populate currency options with current codes
 function populateCurrencyOptions(codes) {
-    let currencyOptionsDisplay = document.getElementById("currencyOptions");
+
     codes.forEach(function (currency) {
-        const option = document.createElement("option");
-        option.innerText = currency;
-        option.value = currency;
-        currencyOptionsDisplay.append(option);
+        if (currency !== "USD") {
+            const option = document.createElement("option");
+            option.innerText = currency;
+            option.value = currency;
+            currencyOptionsDisplay.append(option);
+            document.getElementById("currencyOptions").append(option);
+        }
     });
 }
 
