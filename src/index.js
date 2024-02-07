@@ -4,4 +4,10 @@ import "./css/styles.css";
 
 
 
-// https://v6.exchangerate-api.com/${process.env.API_KEY}/latest/USD;
+function handleSubmission(event) {
+    event.preventDefault();
+    console.log("submission");
+}
+
+const submitButton = document.querySelector("form");
+submitButton.addEventListener("submit", handleSubmission);
