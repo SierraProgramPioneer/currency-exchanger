@@ -13,29 +13,24 @@ export default class ExchangeService {
     // }
 
     static getCurrencyCodes() {
-        // request.addEventListener("loadend", function () {
-        //     const response = JSON.parse(this.responseText);
-        //     if (this.status === 200) {
-        //         return currenciesArray;
-        //     } else {
-        //         printError("errorArray");
-        //     }
-        // });
-
-        // request.open("GET", url, true);
-        // request.send();
-
-
-
         return new Promise(function (resolve, reject) {
-            let dog = 1;
-            if (dog === 1) {
-                resolve(["Sample currency 1", "Sample Currency 2", "Dog kisses"]);
-            } else {
-                reject("error");
-            }
+            let request = new XMLHttpRequest();
+            const url = `https://v6.exchangerate-api.com/v6/${process.env.API_KEY}/latest/USD`;
+            request.addEventListener("loadend", function () {
+                const response = JSON.parse(this.responseText);
+                if (this.status === 200) {
+                    let currencyCodes = [];
+                    for (let key in response.conversion_rates) {
+                        currencyCodes.push(key);
+                    }
+                    resolve(currencyCodes);
+                } else {
+                    reject("error");
+                }
+            });
+            request.open("GET", url, true);
+            request.send();
         });
-
     }
-
 }
+

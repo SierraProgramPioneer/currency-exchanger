@@ -32,7 +32,7 @@ function populateCurrencyOptions() {
             }
         });
     }, function (error) {
-        printError(error);
+        console.log(error);
     });
 }
 
@@ -41,6 +41,7 @@ function printResult(exchangeDataArray) {
     console.log(exchangeDataArray);
     document.getElementById("results").innerText = "result";
 }
+
 
 function printError(errorArray) {
     console.log(errorArray);
