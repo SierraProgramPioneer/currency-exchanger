@@ -6,13 +6,20 @@ import ExchangeService from "./js/exchange-service";
 
 // Busines Logic
 
-function calculateExchange(dollarAmount, selectedCurrency) {
-    let exchangePromise = ExchangeService.getExchangeRate(selectedCurrency);
-    exchangePromise.then(function (exchangeRate) {
-        const exchangedAmount = dollarAmount * exchangeRate;
-        printResult(dollarAmount, selectedCurrency, exchangedAmount);
-    }).catch(function (errorArray) {
-        printError(errorArray);
+function calculateExchangeAmount(dollarAmount, selectedCurrency) {
+    let exchangePromise = ExchangeService.getCurrencyData();
+    exchangePromise.then(function (currencyData) {
+
+        for (let key in currencyData) {
+            if (key === selectedCurrency) {
+                const exchangeRate = currencyData[key];
+                const exchangedAmount = dollarAmount * exchangeRate;
+                printResult(dollarAmount, selectedCurrency, exchangedAmount);
+            }
+        }
+
+    }).catch(function (error) {
+        printError(error);
     });
 }
 
@@ -55,7 +62,7 @@ function populateCurrencyOptions() {
 
         });
     }, function (error) {
-        console.log(error);
+        printError(error);
     });
 }
 
@@ -65,7 +72,7 @@ function handleFormSubmission(event) {
     const dollarAmount = document.getElementById("usdAmount").value;
     const currencyOptions = document.getElementById("currencyOptions");
     const selectedCurrency = currencyOptions.value;
-    calculateExchange(dollarAmount, selectedCurrency);
+    calculateExchangeAmount(dollarAmount, selectedCurrency);
     document.getElementById("usdAmount").value = null;
     currencyOptions.selectedIndex = 0;
 }
