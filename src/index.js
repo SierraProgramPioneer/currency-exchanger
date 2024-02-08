@@ -29,13 +29,12 @@ function calculateExchangeAmount(dollarAmount, selectedCurrency) {
 // Logic to Populate currency options with current codes
 
 function printResult(dollarAmount, selectedCurrency, exchangedAmount) {
-    document.getElementById("results").innerText = `$ ${dollarAmount} USD in ${selectedCurrency} is ${exchangedAmount}`;
+    document.getElementById("results").innerText = `$${dollarAmount} USD is ${exchangedAmount} ${selectedCurrency}`;
 }
 
 
-function printError(errorArray) {
-    console.log(errorArray);
-    document.getElementById("results").innerText = "error";
+function printError(error) {
+    document.getElementById("results").innerText = error;
 }
 
 

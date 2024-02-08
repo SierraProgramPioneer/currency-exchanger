@@ -1,3 +1,17 @@
 body {
-    background-color: slategray;
+    background-image: url(../images/currency.jpg.crdownload);
+    background-size: cover;
+}
+
+.row {
+    padding: 10px;
+    background-color: azure;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.btn {
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
