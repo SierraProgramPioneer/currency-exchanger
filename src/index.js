@@ -6,24 +6,6 @@ import ExchangeService from "./js/exchange-service";
 
 // Busines Logic
 
-function getCodes() {
-    let request = new XMLHttpRequest();
-    const url = `https://v6.exchangerate-api.com/v6/${process.env.API_KEY}/latest/USD`;
-
-    request.addEventListener("loadend", function () {
-        const response = JSON.parse(this.responseText);
-        if (this.status === 200) {
-            populateCurrencyOptions(response);
-        } else {
-            printError("errorArray");
-        }
-    });
-
-    request.open("GET", url, true);
-    request.send();
-}
-
-
 function calculateExchange(dollarAmount, selectedCurrency) {
     let exchangePromise = ExchangeService.exchangeDollars(dollarAmount, selectedCurrency);
     exchangePromise.then(function (exchangeDataArray) {
@@ -37,16 +19,20 @@ function calculateExchange(dollarAmount, selectedCurrency) {
 // UI Logic
 
 // Logic to Populate currency options with current codes
-function populateCurrencyOptions(codes) {
+function populateCurrencyOptions() {
 
-    codes.forEach(function (currency) {
-        if (currency !== "USD") {
-            const option = document.createElement("option");
-            option.innerText = currency;
-            option.value = currency;
-            currencyOptionsDisplay.append(option);
-            document.getElementById("currencyOptions").append(option);
-        }
+    let promise = ExchangeService.getCurrencyCodes();
+    promise.then(function (currencyOptions) {
+        currencyOptions.forEach(function (currency) {
+            if (currency !== "USD") {
+                const option = document.createElement("option");
+                option.innerText = currency;
+                option.value = currency;
+                document.getElementById("currencyOptions").append(option);
+            }
+        });
+    }, function (error) {
+        printError(error);
     });
 }
 
@@ -82,6 +68,6 @@ window.addEventListener("load", function () {
     document.querySelector("form").addEventListener("submit", handleFormSubmission);
     document.getElementById("usdAmount").addEventListener("input", clearPastResults);
     document.getElementById("currencyOptions").addEventListener("click", clearPastResults);
-    getCodes();
+    populateCurrencyOptions();
 });
 
