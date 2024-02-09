@@ -7,9 +7,11 @@ import ExchangeService from "./js/exchange-service";
 // Busines Logic
 
 function calculateExchangeAmount(dollarAmount, selectedCurrency) {
+    // Return a promise (defining conditions of promise) from ExchangeService.getCurrencyData
     let exchangePromise = ExchangeService.getCurrencyData();
-    exchangePromise.then(function (currencyData) {
 
+    // Determine what to do if promise returns resolved
+    exchangePromise.then(function (currencyData) {
         for (let key in currencyData) {
             if (key === selectedCurrency) {
                 const exchangeRate = currencyData[key];
@@ -17,10 +19,11 @@ function calculateExchangeAmount(dollarAmount, selectedCurrency) {
                 printResult(dollarAmount, selectedCurrency, exchangedAmount);
             }
         }
-
-    }).catch(function (error) {
-        printError(error);
-    });
+    })
+        // If not resolved, catch error
+        .catch(function (error) {
+            printError(error);
+        });
 }
 
 
@@ -33,8 +36,8 @@ function printResult(dollarAmount, selectedCurrency, exchangedAmount) {
 }
 
 
-function printError(error) {
-    document.getElementById("results").innerText = error;
+function printError(errorStatus) {
+    document.getElementById("results").innerText = `${errorStatus}: There was an error with your request`;
 }
 
 
@@ -44,25 +47,24 @@ function clearPastResults() {
 
 
 function populateCurrencyOptions() {
+    // Return a promise (defining conditions of promise) from ExchangeService.getCurrencyData
     let promise = ExchangeService.getCurrencyData();
-    promise.then(function (currencyData) {
 
-        let currencyCodes = [];
-        for (let key in currencyData) {
+    // Determine what to do if promise returns resolved
+    promise.then(function (currencyData) {
+        for (let key in currencyData.conversion_rates) {
             if (key !== "USD") {
-                currencyCodes.push(key);
+                const option = document.createElement("option");
+                option.innerText = key;
+                option.value = key;
+                document.getElementById("currencyOptions").append(option);
             }
         }
-        currencyCodes.forEach(function (currency) {
-            const option = document.createElement("option");
-            option.innerText = currency;
-            option.value = currency;
-            document.getElementById("currencyOptions").append(option);
-
+    })
+        // If not resolved, catch error
+        .catch(function (errorStatus) {
+            printError(errorStatus);
         });
-    }, function (error) {
-        printError(error);
-    });
 }
 
 
