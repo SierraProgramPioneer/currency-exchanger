@@ -1,6 +1,5 @@
 export default class ExchangeService {
 
-
     static getCurrencyData() {
         return new Promise(function (resolve, reject) {
             let request = new XMLHttpRequest();
@@ -14,7 +13,7 @@ export default class ExchangeService {
                     resolve(conversionCodes);
                 }
                 else {
-                    reject("error");
+                    reject(this.error);
                 }
             });
             request.open("GET", url, true);
